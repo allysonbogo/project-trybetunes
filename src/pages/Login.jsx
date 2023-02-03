@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Loading from '../components/Loading';
-// import PropTypes from 'prop-types';
 import { createUser } from '../services/userAPI';
 
 class Login extends React.Component {
@@ -8,10 +8,6 @@ class Login extends React.Component {
     name: '',
     isLoading: false,
   };
-
-  // componentDidMount() {
-  //   this.handleClick();
-  // }
 
   handleChange = ({ target }) => {
     const { name } = target;
@@ -60,5 +56,11 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default Login;

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import Loading from '../components/Loading';
-import { createUser } from '../services/userAPI';
+import Header from '../components/Header';
 
 class Search extends Component {
   render() {
     return (
       <div data-testid="page-search">
-        <h2>Teste</h2>
+        <Header />
       </div>
     );
   }
