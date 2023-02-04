@@ -1,48 +1,45 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
-import Loading from '../components/Loading';
+import getMusics from '../services/musicsAPI';
+import MusicCard from '../components/MusicCard';
 
 class Album extends Component {
   state = {
-    albumsList: [],
-    isLoading: true,
+    albumInfo: [],
   };
 
-  // componentDidMount() {
-  //   this.requestAlbums();
-  // }
+  componentDidMount() {
+    this.requestAlbum();
+  }
 
-  requestAlbums = async () => {
+  requestAlbum = async () => {
     const { match: { params: { id } } } = this.props;
-    const response = await searchAlbumsAPI(id);
+    const response = await getMusics(id);
     this.setState({
-      albumsList: response,
-      isLoading: false,
+      albumInfo: response,
     });
   };
 
   render() {
-    const { albumsList, isLoading } = this.state;
-
-    if (isLoading) return <Loading />;
+    const { albumInfo } = this.state;
 
     return (
       <div data-testid="page-album">
         <Header />
 
-        {
-          albumsList.map((album) => (
-            <div
-              key={ album.collectionId }
-              data-testid={ `link-to-album-${collectionId}` }
-            >
-              <p>album.collectionName</p>
-            </div>
-          ))
-        }
+        <MusicCard albumInfo={ albumInfo } />
       </div>
     );
   }
 }
+
+Album.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+};
 
 export default Album;
