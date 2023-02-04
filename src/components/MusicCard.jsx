@@ -73,6 +73,9 @@ class MusicCard extends Component {
 }
 
 MusicCard.propTypes = {
+  artist: PropTypes.string.isRequired,
+  album: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
   albumInfo: PropTypes.arrayOf(
     PropTypes.shape({
       filter: PropTypes.func,
