@@ -18,17 +18,25 @@ class Album extends Component {
     const response = await getMusics(id);
     this.setState({
       albumInfo: response,
+      artist: response[0].artistName,
+      album: response[0].collectionName,
+      image: response[0].artworkUrl100,
     });
   };
 
   render() {
-    const { albumInfo } = this.state;
+    const { albumInfo, artist, album, image } = this.state;
 
     return (
       <div data-testid="page-album">
         <Header />
 
-        <MusicCard albumInfo={ albumInfo } />
+        <MusicCard
+          artist={ artist }
+          album={ album }
+          image={ image }
+          albumInfo={ albumInfo }
+        />
       </div>
     );
   }

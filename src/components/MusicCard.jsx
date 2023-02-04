@@ -8,11 +8,11 @@ class MusicCard extends Component {
     isLoading: false,
   };
 
-  handleChange = async (song) => {
+  handleChange = (song) => {
     this.setState({
       isLoading: true,
-    }, async () => {
-      await addSong(song);
+    }, () => {
+      addSong(song);
       this.setState({
         isLoading: false,
       });
@@ -20,22 +20,22 @@ class MusicCard extends Component {
   };
 
   render() {
-    const { albumInfo } = this.props;
     const { isLoading } = this.state;
+    const { albumInfo, artist, album, image } = this.props;
 
     if (isLoading) return <Loading />;
 
     return (
       <div>
-        {
-          albumInfo.filter((song) => song.collectionType)
-            .map((song) => (
-              <div key={ song.collectionId }>
-                <h2 data-testid="album-name">{ song.collectionName }</h2>
-                <h3 data-testid="artist-name">{ song.artistName }</h3>
-              </div>
-            ))
-        }
+        <img src={ image } alt={ `Capa do álbum ${album}` } />
+        <h2 data-testid="album-name">
+          { album }
+        </h2>
+
+        <h3 data-testid="artist-name">
+          { artist }
+        </h3>
+
         {
           albumInfo.filter((song) => song.trackId)
             .map((song) => (

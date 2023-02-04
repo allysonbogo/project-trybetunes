@@ -35,7 +35,7 @@ class Header extends Component {
           Perfil
         </Link>
         <span data-testid="header-user-name">
-          Olá
+          Olá,
           {' '}
           { name }
           !

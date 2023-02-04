@@ -44,12 +44,12 @@ class Search extends Component {
         {
           albumsList.map((album) => (
             <div key={ album.collectionId }>
-              <p>{ album.collectionName }</p>
               <Link
                 to={ `/album/${album.collectionId}` }
                 data-testid={ `link-to-album-${album.collectionId}` }
               >
-                Ouça agora
+                <img src={ album.artworkUrl100 } alt={ album.collectionName } />
+                <p>{ album.collectionName }</p>
               </Link>
             </div>
           ))
