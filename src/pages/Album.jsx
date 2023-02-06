@@ -7,6 +7,7 @@ import MusicCard from '../components/MusicCard';
 class Album extends Component {
   state = {
     albumInfo: [],
+    albumSongs: [],
   };
 
   componentDidMount() {
@@ -17,25 +18,21 @@ class Album extends Component {
     const { match: { params: { id } } } = this.props;
     const response = await getMusics(id);
     this.setState({
-      albumInfo: response,
-      artist: response[0].artistName,
-      album: response[0].collectionName,
-      image: response[0].artworkUrl100,
+      albumInfo: response[0],
+      albumSongs: response.filter((song) => song.trackId),
     });
   };
 
   render() {
-    const { albumInfo, artist, album, image } = this.state;
+    const { albumInfo, albumSongs } = this.state;
 
     return (
       <div data-testid="page-album">
         <Header />
 
         <MusicCard
-          artist={ artist }
-          album={ album }
-          image={ image }
           albumInfo={ albumInfo }
+          albumSongs={ albumSongs }
         />
       </div>
     );

@@ -6,66 +6,78 @@ import { addSong } from '../services/favoriteSongsAPI';
 class MusicCard extends Component {
   state = {
     isLoading: false,
+    favoriteSongs: [],
   };
+
+  componentDidMount() {
+    this.setState({
+      favoriteSongs: JSON.parse(localStorage.getItem('favorite_songs')),
+    });
+  }
 
   handleChange = (song) => {
     this.setState({
       isLoading: true,
-    }, () => {
-      addSong(song);
+    }, async () => {
+      await addSong(song);
       this.setState({
         isLoading: false,
+        favoriteSongs: JSON.parse(localStorage.getItem('favorite_songs')),
       });
     });
   };
 
   render() {
-    const { isLoading } = this.state;
-    const { albumInfo, artist, album, image } = this.props;
+    const { albumInfo, albumSongs } = this.props;
+    const { isLoading, favoriteSongs } = this.state;
 
     if (isLoading) return <Loading />;
 
     return (
       <div>
-        <img src={ image } alt={ `Capa do álbum ${album}` } />
+        { albumInfo.artworkUrl100
+        && <img
+          src={ albumInfo.artworkUrl100 }
+          alt={ `Capa do álbum ${albumInfo.collectionName}` }
+        /> }
         <h2 data-testid="album-name">
-          { album }
+          { albumInfo.collectionName }
         </h2>
 
         <h3 data-testid="artist-name">
-          { artist }
+          { albumInfo.artistName }
         </h3>
 
         {
-          albumInfo.filter((song) => song.trackId)
-            .map((song) => (
-              <div key={ song.trackId }>
-                <p>{ song.trackName }</p>
+          albumSongs.map((song) => (
+            <div key={ song.trackId }>
+              <p>{ song.trackName }</p>
 
-                <audio data-testid="audio-component" src={ song.previewUrl } controls>
-                  <track kind="captions" />
-                  O seu navegador não suporta o elemento
-                  {' '}
-                  {' '}
-                  <code>audio</code>
-                  .
-                </audio>
+              <audio data-testid="audio-component" src={ song.previewUrl } controls>
+                <track kind="captions" />
+                O seu navegador não suporta o elemento
+                {' '}
+                {' '}
+                <code>audio</code>
+                .
+              </audio>
 
-                <label
-                  htmlFor={ `favorite-music-${song.trackId}` }
-                  data-testid={ `checkbox-music-${song.trackId}` }
-                >
-                  Favorita
-                  <input
-                    id={ `favorite-music-${song.trackId}` }
-                    type="checkbox"
-                    name="favorite-input"
-                    checked={ false }
-                    onChange={ () => this.handleChange(song) }
-                  />
-                </label>
-              </div>
-            ))
+              <label
+                htmlFor={ `favorite-music-${song.trackId}` }
+                data-testid={ `checkbox-music-${song.trackId}` }
+              >
+                Favorita
+                <input
+                  id={ `favorite-music-${song.trackId}` }
+                  type="checkbox"
+                  name="favorite-input"
+                  checked={ favoriteSongs
+                    .some((favoriteSong) => favoriteSong.trackId === song.trackId) }
+                  onChange={ () => this.handleChange(song) }
+                />
+              </label>
+            </div>
+          ))
         }
       </div>
     );
@@ -73,12 +85,13 @@ class MusicCard extends Component {
 }
 
 MusicCard.propTypes = {
-  artist: PropTypes.string.isRequired,
-  album: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  albumInfo: PropTypes.arrayOf(
+  albumInfo: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object,
+  ]).isRequired,
+  albumSongs: PropTypes.arrayOf(
     PropTypes.shape({
-      filter: PropTypes.func,
+      map: PropTypes.func,
     }),
   ).isRequired,
 };
