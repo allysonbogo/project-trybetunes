@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Loading from './Loading';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 class MusicCard extends Component {
   state = {
@@ -9,9 +9,9 @@ class MusicCard extends Component {
     favoriteSongs: [],
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({
-      favoriteSongs: JSON.parse(localStorage.getItem('favorite_songs')),
+      favoriteSongs: await getFavoriteSongs(),
     });
   }
 
@@ -22,7 +22,7 @@ class MusicCard extends Component {
       await addSong(song);
       this.setState({
         isLoading: false,
-        favoriteSongs: JSON.parse(localStorage.getItem('favorite_songs')),
+        favoriteSongs: await getFavoriteSongs(),
       });
     });
   };
@@ -35,7 +35,7 @@ class MusicCard extends Component {
 
     return (
       <div>
-        { albumInfo.artworkUrl100
+        { albumInfo.collectionName
         && <img
           src={ albumInfo.artworkUrl100 }
           alt={ `Capa do álbum ${albumInfo.collectionName}` }
