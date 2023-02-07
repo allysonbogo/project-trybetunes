@@ -7,7 +7,7 @@ import { getUser } from '../services/userAPI';
 class Profile extends Component {
   state = {
     isLoading: false,
-    userInfo: [],
+    userInfo: {},
   };
 
   componentDidMount() {
