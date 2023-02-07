@@ -16,7 +16,7 @@ class Login extends React.Component {
     });
   };
 
-  handleClick = async () => {
+  handleClick = () => {
     const { name } = this.state;
     const { history } = this.props;
     this.setState({

@@ -9,9 +9,14 @@ class Favorites extends Component {
     favoriteSongs: [],
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     this.setState({
-      favoriteSongs: await getFavoriteSongs(),
+      isLoading: true,
+    }, async () => {
+      this.setState({
+        favoriteSongs: await getFavoriteSongs(),
+        isLoading: false,
+      });
     });
   }
 
@@ -39,13 +44,11 @@ class Favorites extends Component {
   render() {
     const { isLoading, favoriteSongs } = this.state;
 
-    if (isLoading) return <Loading />;
-
     return (
       <div data-testid="page-favorites">
         <Header />
 
-        {
+        {isLoading ? <Loading /> : (
           favoriteSongs.map((song) => (
             <div key={ song.trackId }>
               <p>{ song.trackName }</p>
@@ -75,7 +78,7 @@ class Favorites extends Component {
               </label>
             </div>
           ))
-        }
+        )}
       </div>
     );
   }
