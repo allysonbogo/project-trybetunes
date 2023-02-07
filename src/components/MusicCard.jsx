@@ -43,51 +43,55 @@ class MusicCard extends Component {
     if (isLoading) return <Loading />;
 
     return (
-      <div>
-        { albumInfo.collectionName
+      <div className="AlbumPage">
+        <div className="AlbumInfo">
+          { albumInfo.collectionName
         && <img
           src={ albumInfo.artworkUrl100 }
           alt={ `Capa do álbum ${albumInfo.collectionName}` }
         /> }
-        <h2 data-testid="album-name">
-          { albumInfo.collectionName }
-        </h2>
+          <h2 data-testid="album-name">
+            { albumInfo.collectionName }
+          </h2>
 
-        <h3 data-testid="artist-name">
-          { albumInfo.artistName }
-        </h3>
+          <h3 data-testid="artist-name">
+            { albumInfo.artistName }
+          </h3>
+        </div>
 
-        {
-          albumSongs.map((song) => (
-            <div key={ song.trackId }>
-              <p>{ song.trackName }</p>
+        <div className="MusicContainer">
+          {
+            albumSongs.map((song) => (
+              <div className="MusicCard" key={ song.trackId }>
+                <p>{ song.trackName }</p>
 
-              <audio data-testid="audio-component" src={ song.previewUrl } controls>
-                <track kind="captions" />
-                O seu navegador não suporta o elemento
-                {' '}
-                {' '}
-                <code>audio</code>
-                .
-              </audio>
+                <audio data-testid="audio-component" src={ song.previewUrl } controls>
+                  <track kind="captions" />
+                  O seu navegador não suporta o elemento
+                  {' '}
+                  {' '}
+                  <code>audio</code>
+                  .
+                </audio>
 
-              <label
-                htmlFor={ `favorite-music-${song.trackId}` }
-                data-testid={ `checkbox-music-${song.trackId}` }
-              >
-                Favorita
-                <input
-                  id={ `favorite-music-${song.trackId}` }
-                  type="checkbox"
-                  name="favorite-input"
-                  checked={ favoriteSongs
-                    .some((favoriteSong) => favoriteSong.trackId === song.trackId) }
-                  onChange={ () => this.handleChange(song) }
-                />
-              </label>
-            </div>
-          ))
-        }
+                <label
+                  htmlFor={ `favorite-music-${song.trackId}` }
+                  data-testid={ `checkbox-music-${song.trackId}` }
+                >
+                  Favorita
+                  <input
+                    id={ `favorite-music-${song.trackId}` }
+                    type="checkbox"
+                    name="favorite-input"
+                    checked={ favoriteSongs
+                      .some((favoriteSong) => favoriteSong.trackId === song.trackId) }
+                    onChange={ () => this.handleChange(song) }
+                  />
+                </label>
+              </div>
+            ))
+          }
+        </div>
       </div>
     );
   }

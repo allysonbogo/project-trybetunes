@@ -1,13 +1,15 @@
 .Header {
   align-items: center;
-  border-bottom: 1px solid #e1e1e1;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid aqua;
+  border-radius: 50px;
   display: flex;
   height: 60px;
   justify-content: space-between;
+  margin: 25px 50px;
   padding: 0 40px;
 }
 
-.Header img {
-  max-width: 100%;
-  width: 100px;
+.Header span {
+  font-weight: 500;
 }

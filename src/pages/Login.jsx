@@ -33,23 +33,30 @@ class Login extends React.Component {
     if (isLoading) return <Loading />;
 
     return (
-      <div data-testid="page-login">
-        <input
-          type="text"
-          name="name"
-          value={ name }
-          onChange={ this.handleChange }
-          data-testid="login-name-input"
+      <div className="Login" data-testid="page-login">
+        <img
+          src="https://static.thenounproject.com/png/417102-200.png"
+          alt="Login"
         />
 
-        <button
-          type="button"
-          disabled={ name.length <= 2 }
-          onClick={ this.handleClick }
-          data-testid="login-submit-button"
-        >
-          Entrar
-        </button>
+        <div className="LoginDiv">
+          <input
+            type="text"
+            name="name"
+            value={ name }
+            onChange={ this.handleChange }
+            data-testid="login-name-input"
+          />
+
+          <button
+            type="button"
+            disabled={ name.length <= 2 }
+            onClick={ this.handleClick }
+            data-testid="login-submit-button"
+          >
+            Entrar
+          </button>
+        </div>
       </div>
     );
   }

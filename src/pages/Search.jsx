@@ -36,19 +36,20 @@ class Search extends Component {
   albumsContainer = () => {
     const { albumsList, artist } = this.state;
     return (
-      <div>
+      <div className="SearchAlbum">
         <h3>
           {`Resultado de álbuns de: ${artist}`}
           {' '}
         </h3>
         {
           albumsList.map((album) => (
-            <div key={ album.collectionId }>
+            <div className="AlbumCard" key={ album.collectionId }>
               <Link
                 to={ `/album/${album.collectionId}` }
                 data-testid={ `link-to-album-${album.collectionId}` }
               >
                 <img src={ album.artworkUrl100 } alt={ album.collectionName } />
+                <br />
                 <p>{ album.collectionName }</p>
               </Link>
             </div>
@@ -70,24 +71,25 @@ class Search extends Component {
       <div data-testid="page-search">
         <Header />
 
-        <input
-          id="name-input"
-          type="text"
-          name="search"
-          value={ search }
-          onChange={ this.handleChange }
-          data-testid="search-artist-input"
-        />
+        <div className="Search">
+          <input
+            id="name-input"
+            type="text"
+            name="search"
+            value={ search }
+            onChange={ this.handleChange }
+            data-testid="search-artist-input"
+          />
 
-        <button
-          type="button"
-          disabled={ search.length < 2 }
-          onClick={ this.handleClick }
-          data-testid="search-artist-button"
-        >
-          Pesquisar
-        </button>
-
+          <button
+            type="button"
+            disabled={ search.length < 2 }
+            onClick={ this.handleClick }
+            data-testid="search-artist-button"
+          >
+            Pesquisar
+          </button>
+        </div>
         <div>
           { artist ? results : '' }
         </div>
