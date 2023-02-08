@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Loading from './Loading';
@@ -10,9 +11,7 @@ class MusicCard extends Component {
   };
 
   async componentDidMount() {
-    this.setState({
-      favoriteSongs: await getFavoriteSongs(),
-    });
+    this.handleChange();
   }
 
   isFavorite = (song) => {
@@ -74,20 +73,20 @@ class MusicCard extends Component {
                   .
                 </audio>
 
-                <label
-                  htmlFor={ `favorite-music-${song.trackId}` }
+                {/* <label
+                  htmlFor="favorite-input"
                   data-testid={ `checkbox-music-${song.trackId}` }
-                >
-                  Favorita
-                  <input
-                    id={ `favorite-music-${song.trackId}` }
-                    type="checkbox"
-                    name="favorite-input"
-                    checked={ favoriteSongs
-                      .some((favoriteSong) => favoriteSong.trackId === song.trackId) }
-                    onChange={ () => this.handleChange(song) }
-                  />
-                </label>
+                > */}
+                <input
+                  id={ song.trackId }
+                  type="checkbox"
+                  name="favorite-input"
+                  checked={ favoriteSongs
+                    .some((favoriteSong) => favoriteSong.trackId === song.trackId) }
+                  onChange={ () => this.handleChange(song) }
+                />
+                <label htmlFor={ song.trackId }>❤</label>
+                {/* </label> */}
               </div>
             ))
           }

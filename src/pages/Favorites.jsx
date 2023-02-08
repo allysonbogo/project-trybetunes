@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { Component } from 'react';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
@@ -48,36 +49,41 @@ class Favorites extends Component {
       <div data-testid="page-favorites">
         <Header />
 
-        {isLoading ? <Loading /> : (
-          favoriteSongs.map((song) => (
-            <div key={ song.trackId }>
-              <p>{ song.trackName }</p>
+        { isLoading && <Loading />}
 
-              <audio data-testid="audio-component" src={ song.previewUrl } controls>
-                <track kind="captions" />
-                O seu navegador não suporta o elemento
-                {' '}
-                {' '}
-                <code>audio</code>
-                .
-              </audio>
+        {!isLoading && (
+          <div className="FavoriteContainer">
+            <h2>Músicas favoritas</h2>
+            {favoriteSongs.map((song) => (
+              <div className="MusicCard" key={ song.trackId }>
+                <p>{ song.trackName }</p>
 
-              <label
-                htmlFor={ `favorite-music-${song.trackId}` }
-                data-testid={ `checkbox-music-${song.trackId}` }
-              >
-                Favorita
-                <input
-                  id={ `favorite-music-${song.trackId}` }
-                  type="checkbox"
-                  name="favorite-input"
-                  checked={ favoriteSongs
-                    .some((favoriteSong) => favoriteSong.trackId === song.trackId) }
-                  onChange={ () => this.handleChange(song) }
-                />
-              </label>
-            </div>
-          ))
+                <audio data-testid="audio-component" src={ song.previewUrl } controls>
+                  <track kind="captions" />
+                  O seu navegador não suporta o elemento
+                  {' '}
+                  {' '}
+                  <code>audio</code>
+                  .
+                </audio>
+
+                <label
+                  htmlFor={ song.trackId }
+                  data-testid={ `checkbox-music-${song.trackId}` }
+                >
+                  <input
+                    id={ song.trackId }
+                    type="checkbox"
+                    name="favorite-input"
+                    checked={ favoriteSongs
+                      .some((favoriteSong) => favoriteSong.trackId === song.trackId) }
+                    onChange={ () => this.handleChange(song) }
+                  />
+                  <label htmlFor={ song.trackId }>❤</label>
+                </label>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     );

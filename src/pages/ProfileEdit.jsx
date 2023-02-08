@@ -74,45 +74,14 @@ class ProfileEdit extends Component {
         <Header />
 
         {isLoading ? <Loading /> : (
-          <form onSubmit={ this.handleClick }>
-            <label htmlFor="name-input">
-              Nome
-              <input
-                id="name-input"
-                type="text"
-                name="name"
-                value={ name }
-                onChange={ this.handleChange }
-                data-testid="edit-input-name"
+          <form className="ProfileEdit" onSubmit={ this.handleClick }>
+            <div className="ImageEdit">
+              <img
+                src={ image || 'https://180dc.org/wp-content/uploads/2018/05/missing.jpg' }
+                alt={ `Foto de ${name}` }
+                data-testid="profile-image"
               />
-            </label>
 
-            <label htmlFor="email-input">
-              E-mail
-              <input
-                id="email-input"
-                type="text"
-                name="email"
-                value={ email }
-                onChange={ this.handleChange }
-                data-testid="edit-input-email"
-              />
-            </label>
-
-            <label htmlFor="description-input">
-              Descrição
-              <input
-                id="description-input"
-                type="text"
-                name="description"
-                value={ description }
-                onChange={ this.handleChange }
-                data-testid="edit-input-description"
-              />
-            </label>
-
-            <label htmlFor="image-input">
-              Imagem
               <input
                 id="image-input"
                 type="text"
@@ -121,15 +90,54 @@ class ProfileEdit extends Component {
                 onChange={ this.handleChange }
                 data-testid="edit-input-image"
               />
-            </label>
+            </div>
 
-            <button
-              type="submit"
-              disabled={ this.isButtonDisabled() }
-              data-testid="edit-button-save"
-            >
-              Salvar
-            </button>
+            <div className="ProfileInfo">
+              <label htmlFor="name-input">
+                <h4>Nome</h4>
+                <input
+                  id="name-input"
+                  type="text"
+                  name="name"
+                  value={ name }
+                  onChange={ this.handleChange }
+                  data-testid="edit-input-name"
+                />
+              </label>
+
+              <label htmlFor="email-input">
+                <h4>E-mail</h4>
+                <input
+                  id="email-input"
+                  type="text"
+                  name="email"
+                  value={ email }
+                  onChange={ this.handleChange }
+                  data-testid="edit-input-email"
+                />
+              </label>
+
+              <label htmlFor="description-input">
+                <h4>Descrição</h4>
+                <input
+                  id="description-input"
+                  type="text"
+                  name="description"
+                  value={ description }
+                  onChange={ this.handleChange }
+                  data-testid="edit-input-description"
+                />
+              </label>
+              <p>
+                <button
+                  type="submit"
+                  disabled={ this.isButtonDisabled() }
+                  data-testid="edit-button-save"
+                >
+                  Salvar
+                </button>
+              </p>
+            </div>
           </form>
         )}
       </div>

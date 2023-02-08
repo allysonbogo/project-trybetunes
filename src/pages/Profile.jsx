@@ -33,25 +33,26 @@ class Profile extends Component {
         <Header />
         <p style={ { display: 'none' } }>{ userInfo.name }</p>
         {isLoading ? <Loading /> : (
-          <div>
+          <div className="Profile">
             <img
-              src={ userInfo.image }
+              src={ userInfo.image || 'https://180dc.org/wp-content/uploads/2018/05/missing.jpg' }
               alt={ `Foto de ${userInfo.name}` }
               data-testid="profile-image"
             />
+            <div className="ProfileInfo">
+              <h4>Nome</h4>
+              <p>{ userInfo.name }</p>
 
-            <Link to="/profile/edit">
-              Editar perfil
-            </Link>
+              <h4>E-mail</h4>
+              <p>{ userInfo.email || '...' }</p>
 
-            <h4>Nome</h4>
-            <p>{ userInfo.name }</p>
+              <h4>Descrição</h4>
+              <p>{ userInfo.description || '...' }</p>
 
-            <h4>E-mail</h4>
-            <p>{ userInfo.email }</p>
-
-            <h4>Descrição</h4>
-            <p>{ userInfo.description }</p>
+              <Link to="/profile/edit">
+                Editar perfil
+              </Link>
+            </div>
           </div>
         ) }
       </div>

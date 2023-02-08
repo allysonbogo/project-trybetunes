@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
+import Loading from '../components/Loading';
 
 class Search extends Component {
   state = {
     search: '',
     albumsList: [],
     artist: '',
+    isLoading: false,
   };
 
   componentDidMount() {
@@ -28,8 +30,13 @@ class Search extends Component {
     if (response.length === 0) this.setState({ albumsList: '' });
     if (response.length > 0) this.setState({ albumsList: response });
     this.setState({
-      search: '',
-      artist: search,
+      isLoading: true,
+    }, () => {
+      this.setState({
+        search: '',
+        artist: search,
+        isLoading: false,
+      });
     });
   };
 
@@ -37,10 +44,10 @@ class Search extends Component {
     const { albumsList, artist } = this.state;
     return (
       <div className="SearchAlbum">
-        <h3>
+        <h2>
           {`Resultado de álbuns de: ${artist}`}
           {' '}
-        </h3>
+        </h2>
         {
           albumsList.map((album) => (
             <div className="AlbumCard" key={ album.collectionId }>
@@ -49,8 +56,8 @@ class Search extends Component {
                 data-testid={ `link-to-album-${album.collectionId}` }
               >
                 <img src={ album.artworkUrl100 } alt={ album.collectionName } />
-                <br />
-                <p>{ album.collectionName }</p>
+                <h3>{ album.collectionName }</h3>
+                <p>{ album.artistName }</p>
               </Link>
             </div>
           ))
@@ -60,7 +67,7 @@ class Search extends Component {
   };
 
   render() {
-    const { search, albumsList, artist } = this.state;
+    const { search, albumsList, artist, isLoading } = this.state;
     const results = albumsList ? (
       <div>
         { this.albumsContainer() }
@@ -90,9 +97,12 @@ class Search extends Component {
             Pesquisar
           </button>
         </div>
-        <div>
-          { artist ? results : '' }
-        </div>
+
+        {isLoading ? <Loading /> : (
+          <div>
+            { artist ? results : '' }
+          </div>
+        )}
       </div>
     );
   }
